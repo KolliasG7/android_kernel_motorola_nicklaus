@@ -87,7 +87,7 @@ config MTK_VOLTE_SUPPORT
 	      set, there is no error whatever CRYPTO_NULL is set or not set
 
 if INET
-source "net/wireguard/Kconfig"
+# wireguard not available on kernel 3.18 (merged in 5.6)
 source "net/ipv4/Kconfig"
 source "net/ipv6/Kconfig"
 source "net/netlabel/Kconfig"
