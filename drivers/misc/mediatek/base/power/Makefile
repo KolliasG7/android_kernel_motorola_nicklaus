@@ -44,11 +44,12 @@ obj-$(CONFIG_ARCH_MT8163) += hps/v1/
 obj-$(CONFIG_ARCH_MT8167) += hps/v1/
 obj-$(CONFIG_ARCH_MT8173) += hps/v1/
 obj-$(CONFIG_ARCH_MT6757) += hps/v2/
-obj-$(CONFIG_ARCH_MT6735) += spm_v1/
-obj-$(CONFIG_ARCH_MT6735M) += spm_v1/
-obj-$(CONFIG_ARCH_MT6753) += spm_v1/
-obj-$(CONFIG_ARCH_MT6570) += spm_v1/
-obj-$(CONFIG_ARCH_MT6580) += spm_v1/
+# spm_v1 disabled: causes GCC segfault (exit 139) on modern GCC, not needed for server
+#obj-$(CONFIG_ARCH_MT6735) += spm_v1/
+#obj-$(CONFIG_ARCH_MT6735M) += spm_v1/
+#obj-$(CONFIG_ARCH_MT6753) += spm_v1/
+#obj-$(CONFIG_ARCH_MT6570) += spm_v1/
+#obj-$(CONFIG_ARCH_MT6580) += spm_v1/
 obj-$(CONFIG_ARCH_MT6755) += spm_v2/
 obj-$(CONFIG_ARCH_MT6757) += spm_v2/
 obj-$(CONFIG_ARCH_MT6797) += spm_v2/
