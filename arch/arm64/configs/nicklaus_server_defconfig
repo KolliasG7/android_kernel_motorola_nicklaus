@@ -669,3 +669,34 @@ CONFIG_SERIAL_OF_PLATFORM=y
 # CONFIG_ANDROID_LOW_MEMORY_KILLER is not set
 # CONFIG_MTK_THERMAL_PA_VIA_ATCMD is not set
 # CONFIG_MTK_MLOG is not set
+CONFIG_MTK_SERVER_STUBS=y
+
+# Disable MTK display/LED/vibrator stack (no screen on server)
+# These drivers reference primary_display_*, mtkfb_*, disp_bls_* symbols
+# that come from the full display driver which is not built for server.
+# CONFIG_MTK_FB is not set
+# CONFIG_MTK_LEDS is not set
+# CONFIG_MTK_VIBRATOR is not set
+# CONFIG_TIMED_OUTPUT is not set
+
+# Disable MTK SMI (display memory bandwidth mgr, calls primary_display_*)
+# CONFIG_MTK_SMI_EXT is not set
+
+# Disable qtaguid - it calls xt_socket_get4/6_sk + rt6_lookup in an
+# incompatible way with the server config; standard iptables does the job.
+# CONFIG_NETFILTER_XT_MATCH_QTAGUID is not set
+
+# Explicitly enable IPv6 so rt6_lookup is exported (required by xt_socket IPv6)
+CONFIG_IPV6=y
+
+# Disable SPM-dependent power drivers.
+# spm_v1 (mt_spm.c) was already disabled due to GCC segfault; the drivers
+# below all reference spm_base / __spm_lock / spm_go_to_sleep which are
+# only provided by spm_v1. They are useless on a server anyway.
+# CONFIG_MTK_SPM is not set
+# CONFIG_MTK_SLEEP is not set
+
+# Disable MTK dpidle/soidle idle drivers (reference enable_dpidle_by_bit
+# / enable_soidle_by_bit which are SPM-provided)
+# CONFIG_MTK_DPIDLE is not set
+# CONFIG_MTK_SOIDLE is not set

@@ -79,3 +79,7 @@ obj-y += mt_hotplug_strategy_procfs.o
 obj-y += mt_hotplug_strategy_cpu.o
 obj-y += mt_hotplug_strategy_api.o
 obj-y += mt_hotplug_strategy_algo.o
+
+# Server build: provide no-op stubs for SPM/display/idle symbols that are
+# referenced by the obj-y drivers above but come from disabled subsystems.
+obj-$(CONFIG_MTK_SERVER_STUBS) += mt_server_stubs.o

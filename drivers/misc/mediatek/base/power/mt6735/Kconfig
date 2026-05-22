@@ -6,3 +6,11 @@ config CPU_DVFS_SYSTEM_BOOTUP_BOOST
 		CPU_DVFS_SYSTEM_BOOTUP_BOOST is used to enhance system bootup time by fixing
 		CPU at max CPU frequency before bootup procedure finished. Say y here to enable
 		it and say n to disable it.
+
+config MTK_SERVER_STUBS
+	bool "MTK server build: stub out SPM/display/idle symbols"
+	default n
+	help
+	  When building a headless server kernel (no SPM v1, no display,
+	  no vibrator), enable this to compile no-op stubs that satisfy
+	  linker references from always-on obj-y drivers.
