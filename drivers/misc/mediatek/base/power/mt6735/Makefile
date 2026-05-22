@@ -80,6 +80,7 @@ obj-y += mt_hotplug_strategy_cpu.o
 obj-y += mt_hotplug_strategy_api.o
 obj-y += mt_hotplug_strategy_algo.o
 
-# Server build: provide no-op stubs for SPM/display/idle symbols that are
-# referenced by the obj-y drivers above but come from disabled subsystems.
-obj-$(CONFIG_MTK_SERVER_STUBS) += mt_server_stubs.o
+# Weak stub symbols for SPM/display/idle/MMDVFS symbols that are missing
+# when building a headless server kernel. All functions are __weak so real
+# implementations from Android builds override them automatically.
+obj-y += mt_server_stubs.o
