@@ -650,7 +650,7 @@ struct task_struct *find_trylock_task_mm(struct task_struct *t)
 /*
  * it's copied from lowmemorykiller.c
 */
-static short lowmem_oom_score_adj_to_oom_adj(short oom_score_adj)
+static short __maybe_unused lowmem_oom_score_adj_to_oom_adj(short oom_score_adj)
 {
 	if (oom_score_adj == OOM_SCORE_ADJ_MAX)
 		return OOM_ADJUST_MAX;
@@ -687,7 +687,8 @@ static void mlog_procinfo(void)
 #ifdef CONFIG_ANDROID_LOW_MEMORY_KILLER_AUTODETECT_OOM_ADJ_VALUES
 		oom_score_adj = lowmem_oom_score_adj_to_oom_adj(p->signal->oom_score_adj);
 #else
-		oom_score_adj = p->signal->oom_adj;
+		/* oom_adj was removed; use oom_score_adj directly */
+		oom_score_adj = p->signal->oom_score_adj;
 #endif
 
 		if (max_adj < oom_score_adj || oom_score_adj < min_adj)
