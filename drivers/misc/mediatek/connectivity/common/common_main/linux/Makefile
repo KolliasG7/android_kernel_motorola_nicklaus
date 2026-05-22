@@ -22,6 +22,7 @@ obj-y += osal.o \
 	 stp_sdio.o \
 	 stp_dbg.o \
 	 wmt_dbg.o \
+CFLAGS_wmt_dev.o := -O0
          wmt_dev.o \
          wmt_idc.o \
          bgw_desense.o \
