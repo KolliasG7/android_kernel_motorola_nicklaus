@@ -16,11 +16,15 @@ echo "[*] Jobs: ${JOBS}"
 
 mkdir -p "${OUT_DIR}"
 
+# Always wipe stale dtc build artifacts — old .o files cause yylloc duplicate
+# definition error with GCC 10+ even after patching the source
+rm -rf "${OUT_DIR}/scripts/dtc"
+
 # Configure
 make O="${OUT_DIR}" \
      ARCH="${ARCH}" \
      CROSS_COMPILE="${CROSS_COMPILE}" \
-     nicklaus_server_defconfig || { echo "[!] Config failed"; exit 1; }
+     nicklaus_server_defconfig || { echo "[!] Config FAILED"; exit 1; }
 
 # Build
 make O="${OUT_DIR}" \
@@ -42,9 +46,8 @@ if [ ! -f "${OUT_DIR}/arch/arm64/boot/Image.gz-dtb" ]; then
 fi
 
 echo ""
-echo "[+] Build done!"
+echo "[+] Build SUCCEEDED"
 echo "[+] Kernel image: ${OUT_DIR}/arch/arm64/boot/Image.gz-dtb"
 echo ""
-echo "[!] Flash via fastboot:"
-echo "    fastboot flash boot <your_boot.img>"
-echo "    (use mkbootimg to wrap Image.gz-dtb with initramfs)"
+echo "Next: wrap with mkbootimg and flash via fastboot."
+echo "See SERVER_README.md for full instructions."
