@@ -121,10 +121,13 @@ void SendDvfsRequest(int level)
 	if (level == MMDVFS_VOLTAGE_LOW) {
 		MODULE_MFV_LOGE("[VCODEC][MMDVFS_VDEC] SendDvfsRequest(MMDVFS_VOLTAGE_LOW)\n");
 		clkmux_sel(MT_MUX_VDEC, 3, "MMDVFS_VOLTAGE_LOW");	/* 156MHz */
-		ret = mmdvfs_set_step(SMI_BWC_SCEN_VP, MMDVFS_VOLTAGE_LOW);
+		/* mmdvfs_set_step may expand to nothing when SMI_EXT disabled */
+		mmdvfs_set_step(SMI_BWC_SCEN_VP, MMDVFS_VOLTAGE_LOW);
+		ret = 0;
 	} else if (level == MMDVFS_VOLTAGE_HIGH) {
 		MODULE_MFV_LOGE("[VCODEC][MMDVFS_VDEC] SendDvfsRequest(MMDVFS_VOLTAGE_HIGH)\n");
-		ret = mmdvfs_set_step(SMI_BWC_SCEN_VP, MMDVFS_VOLTAGE_HIGH);
+		mmdvfs_set_step(SMI_BWC_SCEN_VP, MMDVFS_VOLTAGE_HIGH);
+		ret = 0;
 		clkmux_sel(MT_MUX_VDEC, 4, "MMDVFS_VOLTAGE_HIGH");	/* 273MHz */
 	} else {
 		MODULE_MFV_LOGE("[VCODEC][MMDVFS_VDEC] @@ OOPS: level = %d\n", level);
