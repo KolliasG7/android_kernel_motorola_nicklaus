@@ -1440,6 +1440,7 @@ void dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
 			       struct queue_limits *limits)
 {
 	unsigned flush = 0;
+	(void)flush; /* suppress unused-variable warning - leftover from older code */
     bool wc = false, fua = false;
 	/*
 	 * Copy table's limits to the DM device's request_queue

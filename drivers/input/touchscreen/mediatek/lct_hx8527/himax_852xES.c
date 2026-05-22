@@ -2424,10 +2424,7 @@ static int touch_event_handler(void *ptr)
 #ifdef HX_SMART_WAKEUP
 	int ret_event = 0, KEY_EVENT = 0;
 #endif
-#if __WORDSIZE==32
-#elif __WORDSIZE==64
-	struct timespec timeStart, timeEnd, timeDelta;
-#endif
+	/* timeStart/timeEnd/timeDelta removed - dead code on ARM64 */
 	//struct sched_param param = { .sched_priority = RTPM_PRIO_TPD };
 	//sched_setscheduler(current, SCHED_RR, &param);
 
