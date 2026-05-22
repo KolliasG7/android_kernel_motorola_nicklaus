@@ -35,6 +35,7 @@ ccflags-y += -I$(srctree)/drivers/misc/mediatek/lcm/inc/
 endif
 
 obj-y += mt_spm.o
+CFLAGS_mt_spm.o := -O1  # reduce optimization to prevent GCC crash (exit 139)
 obj-y += mt_spm_internal.o
 obj-y += mt_spm_sleep.o
 obj-y += mt_idle.o

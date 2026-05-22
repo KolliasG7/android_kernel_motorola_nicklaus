@@ -1356,7 +1356,7 @@ static int mmc_init_card(struct mmc_host *host, u32 ocr,
 		goto err;
 #ifdef CONFIG_LCT_DEVINFO_SUPPORT// add by zhaofei - 2017-01-05-11-20
 	snprintf(cid_str,(sizeof(u32)*4+1),"%08x%08x%08x%08x", cid[0],cid[1],cid[2],cid[3]);
-	printk("cid_str=%s , length= %d\n",cid_str, sizeof(u32)*4+1);
+	printk("cid_str=%s , length= %zu\n",cid_str, sizeof(u32)*4+1);
 #endif
 #ifdef CONFIG_MMC_FFU
 	if (oldcard && (oldcard->state & MMC_STATE_FFUED)) {
