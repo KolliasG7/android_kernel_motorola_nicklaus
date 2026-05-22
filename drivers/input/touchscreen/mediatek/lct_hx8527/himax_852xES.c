@@ -2425,7 +2425,6 @@ static int touch_event_handler(void *ptr)
 	int ret_event = 0, KEY_EVENT = 0;
 #endif
 #if __WORDSIZE==32
-	struct timespec timeStart, timeEnd, timeDelta;//modify by hxl
 #elif __WORDSIZE==64
 	struct timespec timeStart, timeEnd, timeDelta;
 #endif

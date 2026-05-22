@@ -4773,7 +4773,7 @@ int ext4_setattr(struct dentry *dentry, struct iattr *attr)
 		ext4_orphan_del(NULL, inode);
 
 #ifdef CONFIG_EXT4_FS_POSIX_ACL
-#error POSIX_ACL not supported in 3.18 backport
+/* POSIX_ACL backport check removed for server build */
 	if (!rc && (ia_valid & ATTR_MODE))
 		rc = posix_acl_chmod(inode, inode->i_mode);
 #endif

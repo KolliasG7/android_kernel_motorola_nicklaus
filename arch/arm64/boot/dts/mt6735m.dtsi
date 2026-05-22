@@ -1925,7 +1925,7 @@ initrd=0x44000000,0x1000000 loglevel=8 androidboot.hardware=mt6735";
 	/*modify by hxl end*/
 };
 
-#include "cust.dtsi"
+/* #include "cust.dtsi" -- removed, not needed for server build */
 
 &mt8193ckgen {
 	pinctrl-names = "default", "bus_switch_gpio", "bus_switch_dpi";

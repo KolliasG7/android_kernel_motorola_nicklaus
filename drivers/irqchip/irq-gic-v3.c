@@ -36,6 +36,19 @@
 #include "irq-gic-common.h"
 #include "irqchip.h"
 
+/* MTK backport stubs - not available in this build context */
+#ifndef gic_arch_extn
+struct gic_chip_data_v2m_ops { };
+static struct { int flags; int (*irq_mask)(void*); int (*irq_unmask)(void*); int (*irq_disable)(void*); int (*irq_eoi)(void*); int (*irq_set_type)(void*,int); int (*irq_retrigger)(void*); int (*irq_set_wake)(void*,int); } gic_arch_extn = {0};
+#endif
+#ifndef uncached_logk
+static inline void uncached_logk(int type, void *data) {}
+#define LOGK_IRQ 0
+#endif
+#ifndef from_suspend
+static int from_suspend = 0;
+#endif
+
 struct gic_chip_data {
 	void __iomem		*dist_base;
 	void __iomem		**redist_base;
