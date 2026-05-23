@@ -13,6 +13,19 @@ CROSS_COMPILE="${CROSS_COMPILE:-arm-linux-gnueabihf-}"
 ARCH=arm
 JOBS="${JOBS:-$(nproc)}"
 
+# Sanity check: aarch64 compiler cannot build ARCH=arm
+if echo "${CROSS_COMPILE}" | grep -q "aarch64"; then
+    echo "[!] ERROR: CROSS_COMPILE=${CROSS_COMPILE}"
+    echo "[!] You have an aarch64 compiler set, but this is an ARCH=arm build."
+    echo "[!] The MT6735 bootloader is 32-bit — we must build for ARM (32-bit)."
+    echo "[!] Fix:"
+    echo "[!]   unset CROSS_COMPILE"
+    echo "[!]   # then install arm-linux-gnueabihf-gcc:"
+    echo "[!]   # Arch: sudo pacman -S arm-linux-gnueabihf-gcc"
+    echo "[!]   # Ubuntu: sudo apt install gcc-arm-linux-gnueabihf"
+    exit 1
+fi
+
 echo "[*] Building nicklaus server kernel (ARM 32-bit)..."
 echo "[*] CROSS_COMPILE=${CROSS_COMPILE}"
 echo "[*] Jobs: ${JOBS}"
