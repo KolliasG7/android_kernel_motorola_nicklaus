@@ -11,6 +11,9 @@
  * See http://www.gnu.org/licenses/gpl-2.0.html for more details.
  */
 
+/* GCC 4.9 ICE workaround: disable optimization for this translation unit */
+#pragma GCC optimize("O0")
+
 /*! \file
     \brief brief description
 
