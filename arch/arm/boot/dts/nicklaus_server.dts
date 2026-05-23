@@ -1,0 +1,153 @@
+/dts-v1/;
+
+#include "mt6735m.dtsi"
+#include <dt-bindings/lcm/otm9608_qhd_dsi_cmd.dtsi>
+#include "lct6735_fg20_bat_setting.dtsi"
+
+/ {
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@000 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x000>;
+			enable-method = "mt-boot";
+			clock-frequency = <1450000000>;
+		};
+
+		cpu1: cpu@001 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x001>;
+			enable-method = "mt-boot";
+			clock-frequency = <1450000000>;
+		};
+
+		cpu2: cpu@002 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x002>;
+			enable-method = "mt-boot";
+			clock-frequency = <1450000000>;
+		};
+
+		cpu3: cpu@003 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x003>;
+			enable-method = "mt-boot";
+			clock-frequency = <1450000000>;
+		};
+	};
+
+	/* Full 3GB RAM - stock DTS incorrectly reports only 496MB */
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x40000000 0xC0000000>;
+	};
+};
+
+/* eMMC */
+&mmc0 {
+	clk_src = /bits/ 8 <MSDC50_CLKSRC_400MHZ>;
+	bus-width = <8>;
+	max-frequency = <200000000>;
+	cap-mmc-highspeed;
+	msdc-sys-suspend;
+	mmc-ddr-1_8v;
+	mmc-hs200-1_8v;
+	mmc-hs400-1_8v;
+	non-removable;
+	pinctl = <&mmc0_pins_default>;
+	register_setting = <&mmc0_register_setting_default>;
+	host_function = /bits/ 8 <MSDC_EMMC>;
+	bootable;
+	status = "okay";
+};
+
+/* SD card */
+&mmc1 {
+	clk_src = /bits/ 8 <MSDC30_CLKSRC_200MHZ>;
+	bus-width = <4>;
+	max-frequency = <200000000>;
+	msdc-sys-suspend;
+	cap-sd-highspeed;
+	sd-uhs-sdr104;
+	sd-uhs-sdr50;
+	sd-uhs-ddr50;
+	pinctl = <&mmc1_pins_default>;
+	register_setting = <&mmc1_register_setting_default>;
+	host_function = /bits/ 8 <MSDC_SD>;
+	cd_level = /bits/ 8 <MSDC_CD_LOW>;
+	cd-gpios = <&pio 5 0>;
+	status = "okay";
+};
+
+/* UART3 - serial console */
+&uart3 {
+	status = "okay";
+};
+
+/* Connectivity (WiFi/BT/GPS combo) */
+&consys {
+	pinctrl-names = "default", "gps_lna_state_init",
+	                "gps_lna_state_oh", "gps_lna_state_ol";
+	pinctrl-0 = <&consys_pins_default>;
+	pinctrl-1 = <&gpslna_pins_init>;
+	pinctrl-2 = <&gpslna_pins_oh>;
+	pinctrl-3 = <&gpslna_pins_ol>;
+	status = "okay";
+};
+
+&pio {
+	consys_pins_default: default {};
+
+	gpslna_pins_init: gpslna@0 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO79__FUNC_GPIO79>;
+			slew-rate = <0>;
+			bias-disable;
+			output-low;
+		};
+	};
+	gpslna_pins_oh: gpslna@1 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO79__FUNC_GPIO79>;
+			slew-rate = <1>;
+			output-high;
+		};
+	};
+	gpslna_pins_ol: gpslna@2 {
+		pins_cmd_dat {
+			pins = <PINMUX_GPIO79__FUNC_GPIO79>;
+			slew-rate = <1>;
+			output-low;
+		};
+	};
+
+	mmc0_pins_default: mmc0@default {
+		pins_cmd { drive-strength = /bits/ 8 <2>; };
+		pins_dat { drive-strength = /bits/ 8 <2>; };
+		pins_clk { drive-strength = /bits/ 8 <2>; };
+		pins_rst { drive-strength = /bits/ 8 <2>; };
+		pins_ds  { drive-strength = /bits/ 8 <2>; };
+	};
+	mmc0_register_setting_default: mmc0@register_default {
+		cmd_edge   = /bits/ 8 <MSDC_SMPL_FALLING>;
+		rdata_edge = /bits/ 8 <MSDC_SMPL_FALLING>;
+		wdata_edge = /bits/ 8 <MSDC_SMPL_FALLING>;
+	};
+
+	mmc1_pins_default: mmc1@default {
+		pins_cmd { drive-strength = /bits/ 8 <3>; };
+		pins_dat { drive-strength = /bits/ 8 <3>; };
+		pins_clk { drive-strength = /bits/ 8 <3>; };
+	};
+	mmc1_register_setting_default: mmc1@register_default {
+		cmd_edge   = /bits/ 8 <MSDC_SMPL_FALLING>;
+		rdata_edge = /bits/ 8 <MSDC_SMPL_FALLING>;
+		wdata_edge = /bits/ 8 <MSDC_SMPL_FALLING>;
+	};
+};
