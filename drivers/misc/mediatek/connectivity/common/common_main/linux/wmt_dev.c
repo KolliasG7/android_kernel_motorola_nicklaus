@@ -24,6 +24,9 @@ int  wmt_dev_bgw_desense_init(void *pwmt_dev, unsigned long data) { return 0; }
 void wmt_dev_bgw_desense_deinit(void) {}
 int  wmt_dev_send_cmd_to_daemon(unsigned int cmd) { return 0; }
 
+int  wmt_dev_get_early_suspend_state(void) { return 0; }
+int  wmt_dev_tm_temp_query(void) { return 50; } /* return dummy 50°C */
+
 static int __init wmt_dev_stub_init(void)
 {
     pr_info("wmt_dev: stub loaded (server build)\n");
