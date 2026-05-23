@@ -10,8 +10,10 @@ ccflags-y += \
 
 ccflags-y += -DWMT_CREATE_NODE_DYNAMIC=1
 
-# wmt_dev.c hits a GCC segfault at -Os; compile it at -O0
-CFLAGS_wmt_dev.o := -O0
+# wmt_dev.c causes a GCC 4.9 internal compiler error (segfault) at -Os.
+# Strip -Os from kernel CFLAGS for this file and use -O1 -fno-inline instead.
+CFLAGS_REMOVE_wmt_dev.o := -Os
+CFLAGS_wmt_dev.o := -O1 -fno-inline
 
 obj-y += osal.o \
 	 stp_uart.o \
